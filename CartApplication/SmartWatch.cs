@@ -2,8 +2,8 @@
 {
     public class SmartWatch : Product
     {
-        public override string Name { get; set; } = "SmartWatch";
-        public override double Price { get; set; } = 8000.0;
-        public override double Discount { get; set; } = 0;
+        public override string Name => "SmartWatch";
+        public override double Price => 8000.0;
+        public override double Discount => 0;
     }
 }

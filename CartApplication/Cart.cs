@@ -4,7 +4,7 @@ namespace CartApplication
 {
     public class Cart
     {
-        private List<CartItem> _cartItemsList = new List<CartItem>();
+        private readonly List<CartItem> _cartItemsList = new List<CartItem>();
         private double _discount = 0;
 
         public void SetDiscount(double discount)
@@ -23,12 +23,10 @@ namespace CartApplication
             if (cartItem == null)
             {
                 _cartItemsList.Add(item);
-                item.CalculateCartItemTotalPrice();
             }
             else
             {
                 cartItem.quantity += item.quantity;
-                cartItem.CalculateCartItemTotalPrice();
             }
         }
 
@@ -52,7 +50,6 @@ namespace CartApplication
             else
             {
                 cartItem.quantity -= quantity;
-                cartItem.CalculateCartItemTotalPrice();
             }
             return true;
         }
@@ -63,7 +60,7 @@ namespace CartApplication
             double totalPrice = 0;
             foreach(var item in _cartItemsList)
             {
-                totalPrice += item.totalPrice - item.totalPrice * item.product.Discount / 100;
+                totalPrice += item.GetCartItemTotalPrice() - item.GetCartItemTotalPrice() * item.product.Discount / 100;
             }
             totalPrice -= totalPrice * _discount / 100;
             return totalPrice;

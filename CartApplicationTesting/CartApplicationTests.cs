@@ -4,7 +4,7 @@ using Xunit;
 
 namespace CartApplicationTesting
 {
-    public class CartFixature
+    public class CartApplicationTests
     {
         [Fact]
         public void CheckForProduct()
@@ -19,8 +19,7 @@ namespace CartApplicationTesting
             SmartBand smartBand = new SmartBand();
             SmartWatch smartWatch = new SmartWatch();
             CartItem cartItemBand = new CartItem(smartBand, 4);
-            cartItemBand.CalculateCartItemTotalPrice();
-            Assert.Equal(6800, cartItemBand.totalPrice);
+            Assert.Equal(6800, cartItemBand.GetCartItemTotalPrice());
         }
         [Fact]
         public void TestForTotalCartPrice()

@@ -4,17 +4,18 @@
     {
         public Product product;
         public int quantity;
-        public double totalPrice;
+        private double _totalPrice;
 
         public CartItem(Product product, int quantity = 1)
         {
             this.product = product;
             this.quantity = quantity;
+            _totalPrice = quantity * product.Price;
         }
 
-        public void CalculateCartItemTotalPrice()
+        public double GetCartItemTotalPrice()
         {
-            totalPrice = quantity * product.Price;
+            return _totalPrice;
         }
     }
 }

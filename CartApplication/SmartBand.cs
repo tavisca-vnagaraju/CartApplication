@@ -2,8 +2,8 @@
 {
     public class SmartBand : Product
     {
-        public override string Name { get; set; } = "SmartBand";
-        public override double Price { get; set; } = 1700.0;
-        public override double Discount { get; set; } = 0;
+        public override string Name => "SmartBand";
+        public override double Price => 1700.0;
+        public override double Discount => 0;
     }
 }
