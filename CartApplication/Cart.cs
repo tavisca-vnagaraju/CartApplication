@@ -31,27 +31,19 @@ namespace CartApplication
         }
 
 
-        public bool RemoveItem(string name, int quantity = 1)
+        public bool RemoveItem(CartItem cartItem, int quantity = 1)
         {
-            var cartItem = GetCartItemByName(name);
-
-            if (cartItem == null)
-            {
-                return false;
-            }
-            else if (cartItem.quantity < quantity)
-            {
-                return false;    
-            }
-            else if(cartItem.quantity == quantity)
-            {
-                _cartItemsList.Remove(cartItem);
-            }
-            else
+            if (cartItem.quantity > 0)
             {
                 cartItem.quantity -= quantity;
+                cartItem.totalPrice = cartItem.quantity * cartItem.product.Price;
+                if (cartItem.quantity == 0)
+                {
+                    _cartItemsList.Remove(cartItem);
+                }
+                return true;
             }
-            return true;
+            return false;
         }
 
 
