@@ -1,68 +1,74 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CartApplication
 {
     public class Cart
     {
         private readonly List<CartItem> _cartItemsList = new List<CartItem>();
-        private double _discount = 0;
-
-        public void SetDiscount(double discount)
+        private CartItem _cartItem;
+        private double _totalCartPrice=0;
+        public void AddItem(Product product, int quantity=1)
         {
-            _discount = discount;
-        }
-        private CartItem GetCartItemByName(string name)
-        {
-            return _cartItemsList.Find(cartItem => cartItem.product.Name == name);
-        }
-
-        public void AddItem(CartItem item)
-        {
-            var cartItem = GetCartItemByName(item.product.Name);
-
-            if (cartItem == null)
+            //check product is in cartItems list if not add new cartItem or increase quantity
+            var foundCartItem = _cartItemsList.Find( cartItem => cartItem.product == product);
+            if(foundCartItem != null)
             {
-                _cartItemsList.Add(item);
+                foundCartItem.quantity += quantity;
+                foundCartItem.totalPrice = foundCartItem.quantity * product.Price;
             }
             else
-            {
-                cartItem.quantity += item.quantity;
+            { 
+                _cartItem = new CartItem(product, quantity);
+                _cartItemsList.Add(_cartItem);
             }
         }
-
-
-        public bool RemoveItem(CartItem cartItem, int quantity = 1)
-        {
-            if (cartItem.quantity > 0)
+        public void RemoveItem(Product product, int quantity = 1)
+        {   
+            var foundCartItem = _cartItemsList.Find(cartItem => cartItem.product == product);
+            if (foundCartItem != null)
             {
-                cartItem.quantity -= quantity;
-                cartItem.totalPrice = cartItem.quantity * cartItem.product.Price;
-                if (cartItem.quantity == 0)
+                if(foundCartItem.quantity > 0)
                 {
-                    _cartItemsList.Remove(cartItem);
+                    foundCartItem.quantity -= quantity;
+                    foundCartItem.totalPrice = foundCartItem.quantity * product.Price;
                 }
-                return true;
+                if(foundCartItem.quantity == 0)
+                {
+                    _cartItemsList.Remove(foundCartItem);
+                }
+
             }
-            return false;
         }
-
-
-        public double GetTotalCartPrice()
+        public double GetQuantity(Product product)
         {
-            double totalPrice = 0;
-            foreach(var item in _cartItemsList)
+            var foundCartItem = _cartItemsList.Find(cartItem => cartItem.product == product);
+            if(foundCartItem != null)
             {
-                totalPrice += item.GetCartItemTotalPrice() - item.GetCartItemTotalPrice() * item.product.Discount / 100;
+                return foundCartItem.quantity;
             }
-            totalPrice -= totalPrice * _discount / 100;
-            return totalPrice;
+            return 0;
         }
-
-
-        public List<CartItem> GetCartItems()
+        public double GetCartItemPrice(Product product)
         {
-            return _cartItemsList;
+            var foundCartItem = _cartItemsList.Find(cartItem => cartItem.product == product);
+            if (foundCartItem != null)
+            {
+                return foundCartItem.totalPrice;
+            }
+            return 0;
         }
-
+        public double GetCheckoutPrice()
+        {
+            if(_cartItemsList.Count > 0)
+            {
+                foreach (var cartItem in _cartItemsList)
+                {  
+                    _totalCartPrice += cartItem.totalPrice;
+                }
+            }
+            return _totalCartPrice;
+        }
+        
     }
 }

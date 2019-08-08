@@ -4,26 +4,17 @@ namespace CartApplication
 {
     public class ProductDiscount
     {
-        private Dictionary<Category, double> _productDiscount = new Dictionary<Category, double>();
-        public ProductDiscount()
+        private Dictionary<Product, double> _productDiscount = new Dictionary<Product, double>();
+        public ProductDiscount(Product product,double discount)
         {
-            _productDiscount.Add(Category.Clothes, 0);
-            _productDiscount.Add(Category.Dairy, 2);
-            _productDiscount.Add(Category.Education, 0);
-            _productDiscount.Add(Category.Electronics, 0);
+            _productDiscount[product] = discount;
         }
-        public void SetDiscount(Category category,int number)
+        public double GetDiscountAmount(Product product)
         {
-            if (_productDiscount.ContainsKey(category))
+            if (_productDiscount.ContainsKey(product))
             {
-                _productDiscount[category] = number;
-            }
-        }
-        public double GetDiscount(Category category)
-        {
-            if (_productDiscount.ContainsKey(category))
-            {
-                return _productDiscount[category] ;
+                var discountAmount = product.Price * (_productDiscount[product] / 100);
+                return discountAmount;
             }
             return 0;
         }

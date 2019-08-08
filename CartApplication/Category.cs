@@ -5,6 +5,6 @@
         Dairy,
         Electronics,
         Clothes,
-        Education
+        Stationary
     }
 }
