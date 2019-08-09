@@ -49,5 +49,17 @@ namespace CartApplicationTesting
             CartDiscount cartDiscount = new CartDiscount(10);
             Assert.Equal(10, cartDiscount.GetDiscountAmount(100));
         }
+        [Fact]
+        public void TestForProductDiscount()
+        {
+            Pen pen = new Pen();
+            Shoes shoes = new Shoes();
+            ProductDiscount productDiscount = new ProductDiscount(shoes, 10);
+
+            Cart cart = new Cart(productDiscount);
+            cart.AddItem(pen, 3); //20
+            cart.AddItem(shoes, 2); //100
+            Assert.Equal(240, cart.GetCheckoutPrice());
+        }
     }
 }

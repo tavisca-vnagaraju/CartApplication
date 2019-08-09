@@ -2,20 +2,27 @@
 
 namespace CartApplication
 {
-    public class ProductDiscount
+    public class ProductDiscount: IDiscount
     {
-        private Dictionary<Product, double> _productDiscount = new Dictionary<Product, double>();
+        public Dictionary<Product, double> productDiscount = new Dictionary<Product, double>();
         public ProductDiscount(Product product,double discount)
         {
-            _productDiscount[product] = discount;
+            productDiscount[product] = discount;
         }
-        public double GetDiscountAmount(Product product)
+        public double GetDiscountAmount(CartItem cartItem)
         {
-            if (_productDiscount.ContainsKey(product))
+            if (productDiscount.ContainsKey(cartItem.product))
             {
-                var discountAmount = product.Price * (_productDiscount[product] / 100);
+                var discountAmount = cartItem.GetCartItemTotalPrice() * (productDiscount[cartItem.product] / 100);
                 return discountAmount;
+
             }
+            return 0;
+        }
+
+        public double GetDiscountAmount(Cart cart)
+        {
+            var cartItem = cart.GetCartItemsList();
             return 0;
         }
     }
