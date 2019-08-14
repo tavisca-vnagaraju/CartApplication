@@ -6,7 +6,7 @@
     stages {
         stage('Example') {
             steps {
-                echo 'Hello World testing jenkins file'
+                echo 'Hello World Testing jenkins file'
             }
         }
 		stage('Build') { 
