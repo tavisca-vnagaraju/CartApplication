@@ -3,12 +3,13 @@
     stages {
 		stage('Build') { 
             steps { 
-                sh 'dotnet build -p:Configuration=Release' 
+                echo "Building"
             }
         }
         stage('Test'){
             steps {
-                sh 'dotnet test'
+                echo "Testing"
+
             }
         }
     }
