@@ -1,15 +1,16 @@
-﻿pipeline { 
+﻿pipeline {
     agent any
     stages {
-		stage('Build') { 
-            steps { 
-                echo "Building"
+        stage('Build') {
+            steps {
+                sh 'dotnet build CartApplication.sln -p:configuration=release -v:n'
+                echo "Building......."
             }
         }
-        stage('Test'){
+	stage('Test') {
             steps {
-                echo "Testing"
-
+                sh 'dotnet test'
+                echo "Testing.........."
             }
         }
     }
