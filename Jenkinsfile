@@ -1,14 +1,6 @@
 ﻿pipeline { 
-    agent any 
-    options {
-        skipStagesAfterUnstable()
-    }
+    agent any
     stages {
-        stage('Example') {
-            steps {
-                echo 'Hello World Testing jenkins file'
-            }
-        }
 		stage('Build') { 
             steps { 
                 sh 'dotnet build -p:Configuration=Release' 
